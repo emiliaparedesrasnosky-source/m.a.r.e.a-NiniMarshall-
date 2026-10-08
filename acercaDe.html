@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>M.A.R.E.A. - Acerca de nosotrxs</title>
+
+  <!-- Carga de fuentes de Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link rel="stylesheet" href="style.css">
+
+  <style>
+    /* Estilos específicos para la sección Acerca de Nosotrxs */
+    .acerca-card {
+      background-color: rgba(255, 255, 255, 0.93);
+      border-radius: 12px;
+      padding: 2.5rem;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      margin-bottom: 2.5rem;
+      border-top: 5px solid var(--forest-green, #f44a80);
+    }
+
+    .acerca-card h2 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--primary-dark, #18bcd2);
+      font-size: 2.2rem;
+      margin-bottom: 1.2rem;
+      text-align: center;
+    }
+
+    .acerca-card p {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-size: 1.1rem;
+      line-height: 1.8;
+      color: #2b2b2b;
+      margin-bottom: 1.2rem;
+    }
+
+    /* Grilla de Valores / Pilares */
+    .valores-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 1.5rem;
+      margin: 2rem 0;
+    }
+
+    .valor-item {
+      background: #fdfaf6;
+      border-left: 4px solid var(--primary-dark, #18bcd2);
+      padding: 1.2rem;
+      border-radius: 8px;
+    }
+
+    .valor-item h3 {
+      font-family: 'Montserrat', sans-serif;
+      color: var(--forest-green, #f44a80);
+      margin-bottom: 0.5rem;
+      font-size: 1.2rem;
+    }
+
+    /* Grilla para las Fotografías del Equipo / Trabajo */
+    .fotos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .foto-card {
+      background: #ffffff;
+      border-radius: 10px;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .foto-card:hover {
+      transform: translateY(-4px);
+    }
+
+    .foto-card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+      display: block;
+    }
+
+    .foto-card .epigrafe {
+      padding: 1rem;
+      font-family: 'EB Garamond', serif;
+      font-size: 1.1rem;
+      color: #444;
+    }
+
+    @media (max-width: 768px) {
+      .acerca-card {
+        padding: 1.5rem;
+      }
+
+      .acerca-card h2 {
+        font-size: 1.7rem;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- NAVEGACIÓN PRINCIPAL -->
+  <nav class="navbar">
+    <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
+
+    <div class="nav-links" id="navLinks">
+      <a href="index.html">Inicio</a>
+      <a href="novedades.html">Novedades</a>
+      <a href="galeria.html">Galería</a>
+      <a href="acercaDe.html">Acerca de nosotrxs</a>
+      <a href="juego2.html">Mini-Juego</a>
+      <a href="juego.html">Escribí en la arena</a>
+      <a href="contacto.html">Sumate</a>
+    </div>
+  </nav>
+
+  <!-- HEADER PRINCIPAL -->
+  <header class="header-principal">
+    <h1><span>M.A.R.E.A</span></h1>
+    <p>Movimiento Argentino de Restauración Ecológica Acuática</p>
+  </header>
+
+  <!-- CONTENIDO PRINCIPAL -->
+  <main class="container">
+
+    <!-- SECCIÓN 1: QUIÉNES SOMOS Y LA INICIATIVA -->
+    <section class="acerca-card">
+      <h2>¿Quiénes Somos?</h2>
+      <p>
+        <strong>M.A.R.E.A. (Movimiento Argentino de Restauración Ecológica Acuática)</strong> es una iniciativa independiente impulsada por un equipo comprometido con la conservación de nuestros ecosistemas marinos y costeros. Nacemos frente a la urgente necesidad de frenar la contaminación por plásticos y residuos en nuestras costas.
+      </p>
+      <p>
+        Combinamos la innovación tecnológica sustentable, el diseño biomimético y la concientización ambiental para desarrollar herramientas que ayuden a proteger la biodiversidad acuática sin alterar el hábitat natural de las especies.
+      </p>
+
+      <!-- PILARES / VALORES -->
+      <div class="valores-grid">
+        <div class="valor-item">
+          <h3>🌊 Innovación Sustentable</h3>
+          <p>Creamos tecnología utilizando materiales reciclados y componentes ecológicos.</p>
+        </div>
+        <div class="valor-item">
+          <h3>🐢 Respeto por la Fauna</h3>
+          <p>Nuestros prototipos imitan formas de la naturaleza para convivir en armonía con los animales.</p>
+        </div>
+        <div class="valor-item">
+          <h3>🌱 Acción Comunitaria</h3>
+          <p>Impulsamos jornadas de limpieza, talleres educativos y concientización local.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- SECCIÓN 2: GALERÍA DE FOTOS / EQUIPO / TRABAJO DE CAMPO -->
+    <section class="acerca-card">
+      <h2>Nuestro Trabajo en Acción</h2>
+      <p style="text-align: center;">Un recorrido visual por nuestras actividades, prototipos e iniciativas en las costas.</p>
+
+      <div class="fotos-grid">
+        <!-- FOTO 1 -->
+        <div class="foto-card">
+          <img src="equipo1.jpg" alt="Nuestro Equipo en Acción">
+          <div class="epigrafe">
+            <strong>El Equipo M.A.R.E.A.</strong><br>
+            Trabajando juntas en el desarrollo y prueba de prototipos ecológicos.
+          </div>
+        </div>
+
+        <!-- FOTO 2 -->
+        <div class="foto-card">
+          <img src="equipo2.jpg" alt="Jornada de Limpieza de Costas">
+          <div class="epigrafe">
+            <strong>Jornadas de Limpieza</strong><br>
+            Recolección y clasificación de plásticos en las playas locales.
+          </div>
+        </div>
+
+        <!-- FOTO 3 -->
+        <div class="foto-card">
+          <img src="equipo3.jpg" alt="Pruebas de Prototipos">
+          <div class="epigrafe">
+            <strong>Investigación & Campo</strong><br>
+            Evaluando el desempeño de nuestros prototipos en contacto directo con el agua.
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <p>&copy; 2026 M.A.R.E.A. <br>Hecho con compromiso ambiental.</p>
+  </footer>
+
+  <!-- SCRIPT DE NAVEGACIÓN -->
+  <script>
+    const menuToggle = document.getElementById('menuToggle');
+    const navLinks = document.getElementById('navLinks');
+
+    menuToggle.addEventListener('click', () => {
+      navLinks.classList.toggle('active');
+      menuToggle.classList.toggle('open');
+    });
+  </script>
+
+</body>
+
+</html>

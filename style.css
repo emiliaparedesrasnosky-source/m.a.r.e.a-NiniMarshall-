@@ -1,0 +1,306 @@
+@import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&display=swap');
+
+:root {
+    --primary-dark: #18bcd2;
+    --sage-green: #ed6424;
+    --forest-green: #f44a80;
+    --terracotta: #37c6ff;
+    --light-bg: #ff0000;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* --- CONFIGURACIÓN DE PÁGINA Y STICKY FOOTER --- */
+html {
+    height: 100%;
+}
+
+body {
+    background-color: #fcfbfa;
+    background-image: url('dry-sand-texture-free-photo.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    width: 100%;
+    min-height: 100vh;
+    color: #100101;
+    line-height: 1.6;
+
+    /* Estructura Flexbox para mantener el footer fijo abajo */
+    display: flex;
+    flex-direction: column;
+}
+
+main, .container {
+    flex: 1; /* Ocupa todo el espacio vertical sobrante */
+    width: 100%;
+    max-width: 1000px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* --- HEADER --- */
+header {
+    background-color: var(--primary-dark);
+    color: rgb(233, 22, 131);
+    padding: 2rem 1rem;
+    text-align: center;
+}
+
+.header-principal {
+    background-image: url('marea.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    width: 100%;
+    min-height: 200px;
+
+    /* Máscara de desvanecimiento */
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0) 100%);
+    mask-image: linear-gradient(to bottom, rgba(0, 0, 0, 1) 30%, rgba(0, 0, 0, 0) 100%);
+}
+
+/* 1. Contenedor H1: Genera el destello, resplandor y la animación pulsatil */
+header h1 {
+    font-size: clamp(2.8rem, 8vw, 4.8rem);
+    margin-bottom: 0.5rem;
+    display: inline-block;
+    position: relative;
+
+    /* Animación del destello */
+    animation: destelloAcuatico 3s infinite alternate ease-in-out;
+}
+
+/* 2. Span dentro de H1: Recorta la imagen dentro de las letras sin interferir con la sombra */
+header h1 span {
+    display: inline-block;
+    font-family: 'Montserrat', 'Trebuchet MS', 'Segoe UI', sans-serif;
+    font-weight: 800;
+    letter-spacing: 4px;
+
+    background-image: url('Gemini_Generated_Image_ljrs8bljrs8bljrs.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+
+    /* Borde oscuro para dar definición exterior a las letras */
+    -webkit-text-stroke: 1.5px rgba(0, 0, 0, 0.6);
+}
+
+header p {
+    font-size: clamp(1rem, 4vw, 1.35rem);
+    color: #ffffff;
+    font-family: 'EB Garamond', serif;
+    font-weight: 700;
+    margin-top: 0.6rem;
+    letter-spacing: 0.5px;
+    text-shadow: 0px 2px 4px rgba(0, 0, 0, 0.9), 
+                 0px 0px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* --- ANIMACIÓN DE DESTELLO ACUÁTICO --- */
+@keyframes destelloAcuatico {
+    0% {
+        filter: 
+            drop-shadow(0px 4px 6px rgba(0, 0, 0, 0.7))
+            drop-shadow(0px 0px 10px rgba(255, 255, 255, 0.8))
+            drop-shadow(0px 0px 20px rgba(55, 198, 255, 0.7));
+    }
+    100% {
+        filter: 
+            drop-shadow(0px 5px 8px rgba(0, 0, 0, 0.8))
+            drop-shadow(0px 0px 18px rgba(255, 255, 255, 1))
+            drop-shadow(0px 0px 35px rgba(55, 198, 255, 1));
+    }
+}
+
+/* --- NAVEGACIÓN Y BARRA ROSA --- */
+nav.navbar {
+    background-color: var(--forest-green); /* Tono rosa garantizado */
+    position: relative;
+    width: 100%;
+    z-index: 1000;
+}
+
+.nav-links {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.8rem;
+    padding: 0.8rem;
+    flex-wrap: wrap;
+    font-family: 'Montserrat', 'Trebuchet MS', sans-serif;
+    background-color: var(--forest-green);
+}
+
+nav a {
+    color: #ffffff;
+    text-decoration: none;
+    font-family: 'Montserrat', 'Segoe UI', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    letter-spacing: 1px;
+    padding: 0.4rem 0.8rem;
+    border-radius: 4px;
+    transition: all 0.2s ease-in-out;
+    display: inline-block;
+}
+
+/* Efecto hover con imagen de basura recortada */
+nav a:hover {
+    background-image: url('Gemini_Generated_Image_ljrs8bljrs8bljrs.jpg'); 
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+
+    font-weight: 900;
+    -webkit-text-stroke: 1px rgba(0, 0, 0, 0.7);
+    filter: drop-shadow(0px 2px 4px rgba(0, 0, 0, 0.4));
+    letter-spacing: 1px;
+}
+
+/* Botón Hamburguesa (Oculto en escritorio) */
+.menu-toggle {
+    display: none;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    padding: 0.8rem 1rem;
+    flex-direction: column;
+    gap: 5px;
+    margin: 0 auto;
+}
+
+.menu-toggle span {
+    display: block;
+    width: 28px;
+    height: 3px;
+    background-color: #ffffff;
+    border-radius: 2px;
+    transition: all 0.3s ease-in-out;
+}
+
+/* --- SECCIONES DE CONTENIDO --- */
+section {
+    margin-bottom: 2.5rem;
+    background: var(--sage-green);
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 4px 15px rgba(38, 77, 82, 0.08);
+    border-top: 5px solid var(--sage-green);
+}
+
+#proyecto {
+    background: var(--forest-green);
+}
+
+#contacto {
+    background: #59eb40;
+}
+
+h2 {
+    color: var(--primary-dark);
+    margin-bottom: 1rem;
+    font-size: clamp(1.4rem, 5vw, 1.8rem);
+}
+
+.intro-text {
+    font-size: 1.1rem;
+    margin-bottom: 1.5rem;
+}
+
+.prototypes-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1.5rem;
+}
+
+.card {
+    background-color: #f4ede4;
+    border-radius: 8px;
+    padding: 1.5rem;
+    border-left: 4px solid var(--terracotta);
+}
+
+.card h3 {
+    color: var(--forest-green);
+    margin-bottom: 0.8rem;
+}
+
+.awareness {
+    background-color: var(--primary-dark);
+    color: white;
+    border-top-color: var(--terracotta);
+}
+
+.awareness h2 {
+    color: var(--sage-green);
+}
+
+/* --- FOOTER --- */
+footer {
+    background-color: var(--primary-dark);
+    color: var(--light-bg);
+    text-align: center;
+    padding: 1.5rem;
+    margin-top: auto; /* Empuja el footer al fondo si falta contenido */
+    font-size: 0.9rem;
+}
+
+/* --- MEDIA QUERIES (ADAPTACIÓN A CELULARES - Menos de 768px) --- */
+@media (max-width: 768px) {
+    .menu-toggle {
+        display: flex;
+    }
+
+    .nav-links {
+        display: none;
+        flex-direction: column;
+        width: 100%;
+        padding: 1rem 0;
+        gap: 1.2rem;
+        background-color: var(--forest-green); /* Mantiene la barra rosa desplegada */
+        border-top: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .nav-links.active {
+        display: flex;
+    }
+
+    /* Transformación de botón hamburguesa a 'X' */
+    .menu-toggle.open span:nth-child(1) {
+        transform: translateY(8px) rotate(45deg);
+    }
+    .menu-toggle.open span:nth-child(2) {
+        opacity: 0;
+    }
+    .menu-toggle.open span:nth-child(3) {
+        transform: translateY(-8px) rotate(-45deg);
+    }
+
+    section {
+        padding: 1.25rem;
+    }
+
+    main, .container {
+        margin: 1rem auto;
+        padding: 0 0.8rem;
+    }
+}

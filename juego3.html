@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>M.A.R.E.A. - Mini-Juego EcoSnake</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400..800;1,400..800&family=Fredoka:wght@400;500;600;700&family=Montserrat:wght@600;700;800&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        .game-font {
+            font-family: 'Fredoka', cursive, sans-serif;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        /* Contenedor del Canvas Adaptable */
+        .game-viewport {
+            position: relative;
+            width: 100%;
+            max-width: 900px;
+            height: 70vh;
+            min-height: 480px;
+            margin: 1.5rem auto;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+            border: 4px solid var(--forest-green, #f44a80);
+            background-color: #0284c7;
+        }
+
+        .btn-cartoon {
+            transition: all 0.15s ease;
+            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
+        }
+
+        .btn-cartoon:active {
+            transform: translateY(3px);
+            box-shadow: 0 3px 0 rgba(0, 0, 0, 0.25);
+        }
+
+        @keyframes bounceSlight {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-6px); }
+        }
+
+        .animate-bounce-slight {
+            animation: bounceSlight 2s infinite ease-in-out;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVEGACIÓN PRINCIPAL -->
+    <nav class="navbar">
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Inicio</a>
+            <a href="novedades.html">Novedades</a>
+            <a href="galeria.html">Galería</a>
+            <a href="acercaDe.html">Acerca de nosotrxs</a>
+            <a href="juego2.html">Mini-Juego</a>
+            <a href="juego.html">Escribí en la arena</a>
+            <a href="contacto.html">Sumate</a>
+        </div>
+    </nav>
+
+    <!-- HEADER PRINCIPAL -->
+    <header class="header-principal">
+        <h1><span>M.A.R.E.A</span></h1>
+        <p>Movimiento Argentino de Restauración Ecológica Acuática</p>
+    </header>
+
+    <!-- CONTENIDO Y MARCO DEL JUEGO -->
+    <main class="container game-font">
+        
+        <div class="game-viewport">
+            <!-- Canvas Interactivo -->
+            <canvas id="gameCanvas" class="absolute inset-0 w-full h-full block z-0"></canvas>
+
+            <!-- 1. MODAL SELECCIÓN DE PERSONAJE -->
+            <div id="selectionModal" class="absolute inset-0 z-50 flex items-center justify-center p-4 bg-sky-950/80 backdrop-blur-sm">
+                <div class="bg-amber-100 border-4 border-amber-400 rounded-3xl p-5 sm:p-6 max-w-lg w-full text-center relative shadow-2xl">
+                    <span class="inline-block bg-sky-400 text-white font-bold px-3 py-1 rounded-full text-xs uppercase mb-2">¡Efecto Víborita! 🐍</span>
+                    <h2 class="text-2xl sm:text-4xl font-black text-sky-950 mb-2">¡EcoSnake Acuático!</h2>
+                    <p class="text-amber-900 font-semibold text-xs sm:text-sm mb-4">Elegí tu personaje y armá una gran cadena juntando la basura de la playa.</p>
+
+                    <div class="grid grid-cols-2 gap-3 mb-5">
+                        <div id="cardTurtle" onclick="selectCharacter('turtle')" class="cursor-pointer bg-emerald-200 border-4 border-emerald-500 rounded-2xl p-3 text-center transition">
+                            <canvas id="previewTurtle" width="60" height="60" class="mx-auto mb-1"></canvas>
+                            <h3 class="text-lg font-black text-emerald-950">Tortuguita</h3>
+                            <p class="text-[10px] text-emerald-900">Experta en el agua</p>
+                        </div>
+
+                        <div id="cardBeetle" onclick="selectCharacter('beetle')" class="cursor-pointer bg-amber-200 border-4 border-amber-500 rounded-2xl p-3 text-center transition">
+                            <canvas id="previewBeetle" width="60" height="60" class="mx-auto mb-1"></canvas>
+                            <h3 class="text-lg font-black text-amber-950">Escarabajo</h3>
+                            <p class="text-[10px] text-amber-900">Experto en la arena</p>
+                        </div>
+                    </div>
+
+                    <button onclick="startGame()" class="w-full py-3 bg-emerald-400 hover:bg-emerald-300 border-4 border-emerald-600 text-emerald-950 text-xl font-black rounded-2xl btn-cartoon">
+                        ¡EMPEZAR A JUGAR! 🚀
+                    </button>
+                </div>
+            </div>
+
+            <!-- 2. HUD INTERFAZ EN JUEGO -->
+            <div id="gameHUD" class="hidden absolute inset-0 z-10 pointer-events-none flex flex-col justify-between p-3">
+                <div class="flex justify-between items-center gap-2">
+                    <div class="bg-white/90 border-2 border-sky-600 rounded-xl px-3 py-1.5 flex items-center gap-2 pointer-events-auto shadow-md">
+                        <canvas id="hudAvatarCanvas" width="32" height="32"></canvas>
+                        <div>
+                            <div id="scoreText" class="text-lg font-black text-sky-950">0 Pts</div>
+                            <div id="chainText" class="text-[10px] font-bold text-sky-700">Largo: 0 elementos</div>
+                        </div>
+                    </div>
+
+                    <div class="flex items-center gap-2 pointer-events-auto">
+                        <button onclick="toggleAudio()" class="w-10 h-10 bg-yellow-300 border-2 border-yellow-600 rounded-xl flex items-center justify-center text-yellow-950 btn-cartoon">
+                            <i id="soundIcon" data-lucide="volume-2" class="w-5 h-5"></i>
+                        </button>
+                        <button onclick="resetToMenu()" class="w-10 h-10 bg-rose-400 border-2 border-rose-600 rounded-xl flex items-center justify-center text-rose-950 btn-cartoon">
+                            <i data-lucide="rotate-ccw" class="w-5 h-5"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- D-Pad Móvil -->
+                <div class="flex justify-between items-end pointer-events-auto sm:hidden mb-1">
+                    <div class="grid grid-cols-3 gap-1 w-32 h-32 bg-white/70 border-2 border-sky-600 p-1.5 rounded-2xl shadow-lg">
+                        <div></div>
+                        <button id="btnUp" class="bg-sky-400 border border-sky-600 rounded-lg flex items-center justify-center text-white"><i data-lucide="chevron-up" class="w-6 h-6"></i></button>
+                        <div></div>
+                        <button id="btnLeft" class="bg-sky-400 border border-sky-600 rounded-lg flex items-center justify-center text-white"><i data-lucide="chevron-left" class="w-6 h-6"></i></button>
+                        <button id="btnDown" class="bg-sky-400 border border-sky-600 rounded-lg flex items-center justify-center text-white"><i data-lucide="chevron-down" class="w-6 h-6"></i></button>
+                        <button id="btnRight" class="bg-sky-400 border border-sky-600 rounded-lg flex items-center justify-center text-white"><i data-lucide="chevron-right" class="w-6 h-6"></i></button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 3. MODAL DE VICTORIA -->
+            <div id="victoryModal" class="hidden absolute inset-0 z-50 flex items-center justify-center p-4 bg-sky-950/80 backdrop-blur-sm">
+                <div class="bg-yellow-100 border-4 border-yellow-400 rounded-3xl p-5 sm:p-6 max-w-sm w-full text-center card-cartoon animate-bounce-slight">
+                    <div class="text-5xl mb-1">🏆</div>
+                    <h2 class="text-2xl font-black text-amber-950 mb-1">¡CADENA COMPLETA!</h2>
+                    <p class="text-amber-900 font-semibold text-xs mb-3">¡Juntaste toda la basura remolcando un gran trencito reciclable!</p>
+
+                    <button onclick="resetToMenu()" class="w-full py-3 bg-emerald-400 border-4 border-emerald-600 text-emerald-950 text-lg font-black rounded-2xl btn-cartoon">
+                        ¡VOLVER A JUGAR! 🔄
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 M.A.R.E.A. <br>Hecho con compromiso ambiental.</p>
+    </footer>
+
+    <!-- LÓGICA DEL JUEGO -->
+    <script>
+        /* Menú Hamburguesa Nav */
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('open');
+        });
+
+        /* Web Audio API */
+        class SoundEngine {
+            constructor() { this.ctx = null; this.muted = false; }
+            init() {
+                if (!this.ctx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    this.ctx = new AudioContext();
+                }
+            }
+            playPop() {
+                if (this.muted || !this.ctx) return;
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(300, now);
+                osc.frequency.exponentialRampToValueAtTime(800, now + 0.08);
+                gain.gain.setValueAtTime(0.2, now);
+                gain.gain.exponentialRampToValueAtTime(0.01, now + 0.08);
+                osc.connect(gain); gain.connect(this.ctx.destination);
+                osc.start(now); osc.stop(now + 0.08);
+            }
+        }
+        const sounds = new SoundEngine();
+        function toggleAudio() {
+            sounds.muted = !sounds.muted;
+            document.getElementById('soundIcon').setAttribute('data-lucide', sounds.muted ? 'volume-x' : 'volume-2');
+            lucide.createIcons();
+        }
+
+        /* Variables Juego */
+        let canvas, ctx;
+        let selectedCharacter = 'turtle';
+        let gameActive = false;
+
+        let player = { x: 0, y: 0, radius: 18, speed: 3.5, angle: 0 };
+        let history = []; // Historial de pos para la cola tipo víborita
+        let tail = [];    // Elementos de basura arrastrados detras
+
+        const keys = { ArrowUp: false, ArrowDown: false, ArrowLeft: false, ArrowRight: false, w: false, a: false, s: false, d: false };
+        let activeTrash = null;
+        let score = 0;
+        let trashCollected = 0;
+        const TOTAL_TRASH = 10;
+
+        const TRASH_TYPES = [
+            { id: 'bottle', emoji: '🍾', color: '#38bdf8' },
+            { id: 'bag', emoji: '🛍️', color: '#e879f9' },
+            { id: 'diaper', emoji: '💩', color: '#fef08a' },
+            { id: 'paper', emoji: '🍬', color: '#f43f5e' }
+        ];
+
+        /* Sprites 2D */
+        function drawTurtleSprite(c, x, y, angle) {
+            c.save(); c.translate(x, y); c.rotate(angle);
+            c.fillStyle = '#22c55e'; c.beginPath(); c.ellipse(0, 0, 14, 11, 0, 0, Math.PI * 2); c.fill();
+            c.fillStyle = '#4ade80'; c.beginPath(); c.arc(14, 0, 7, 0, Math.PI * 2); c.fill();
+            c.fillStyle = '#0f172a'; c.beginPath(); c.arc(16, -2, 1.5, 0, Math.PI * 2); c.arc(16, 2, 1.5, 0, Math.PI * 2); c.fill();
+            c.restore();
+        }
+
+        function drawBeetleSprite(c, x, y, angle) {
+            c.save(); c.translate(x, y); c.rotate(angle);
+            c.fillStyle = '#d97706'; c.beginPath(); c.ellipse(0, 0, 13, 10, 0, 0, Math.PI * 2); c.fill();
+            c.fillStyle = '#92400e'; c.beginPath(); c.arc(10, 0, 6, 0, Math.PI * 2); c.fill();
+            c.restore();
+        }
+
+        function selectCharacter(type) {
+            selectedCharacter = type;
+            document.getElementById('cardTurtle').className = type === 'turtle' ? "cursor-pointer bg-emerald-300 border-4 border-emerald-600 rounded-2xl p-3 text-center" : "cursor-pointer bg-emerald-200 border-2 border-emerald-500 rounded-2xl p-3 text-center opacity-70";
+            document.getElementById('cardBeetle').className = type === 'beetle' ? "cursor-pointer bg-amber-300 border-4 border-amber-600 rounded-2xl p-3 text-center" : "cursor-pointer bg-amber-200 border-2 border-amber-500 rounded-2xl p-3 text-center opacity-70";
+        }
+
+        function spawnNextTrash() {
+            if (trashCollected >= TOTAL_TRASH) {
+                gameActive = false;
+                document.getElementById('victoryModal').classList.remove('hidden');
+                return;
+            }
+            const type = TRASH_TYPES[Math.floor(Math.random() * TRASH_TYPES.length)];
+            activeTrash = {
+                x: Math.random() * (canvas.width - 100) + 50,
+                y: Math.random() * (canvas.height - 100) + 50,
+                radius: 16,
+                type: type
+            };
+        }
+
+        function startGame() {
+            sounds.init();
+            document.getElementById('selectionModal').classList.add('hidden');
+            document.getElementById('gameHUD').classList.remove('hidden');
+
+            const actx = document.getElementById('hudAvatarCanvas').getContext('2d');
+            actx.clearRect(0,0,32,32);
+            if (selectedCharacter === 'turtle') drawTurtleSprite(actx, 16, 16, 0);
+            else drawBeetleSprite(actx, 16, 16, 0);
+
+            score = 0; trashCollected = 0; tail = []; history = [];
+            player.x = canvas.width / 2; player.y = canvas.height / 2;
+            
+            spawnNextTrash();
+            gameActive = true;
+        }
+
+        function resetToMenu() {
+            gameActive = false;
+            document.getElementById('victoryModal').classList.add('hidden');
+            document.getElementById('gameHUD').classList.add('hidden');
+            document.getElementById('selectionModal').classList.remove('hidden');
+        }
+
+        function gameLoop() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Fondo Mar y Arena
+            ctx.fillStyle = '#0284c7'; ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.fillStyle = '#fde047'; ctx.beginPath();
+            ctx.moveTo(0, canvas.height); ctx.lineTo(canvas.width, canvas.height); ctx.lineTo(canvas.width, canvas.height * 0.4);
+            ctx.quadraticCurveTo(canvas.width * 0.5, canvas.height * 0.6, 0, canvas.height * 0.7); ctx.fill();
+
+            if (gameActive) {
+                let moveX = 0, moveY = 0;
+                if (keys.ArrowUp || keys.w) moveY -= 1;
+                if (keys.ArrowDown || keys.s) moveY += 1;
+                if (keys.ArrowLeft || keys.a) moveX -= 1;
+                if (keys.ArrowRight || keys.d) moveX += 1;
+
+                if (moveX !== 0 || moveY !== 0) {
+                    player.angle = Math.atan2(moveY, moveX);
+                    player.x += moveX * player.speed;
+                    player.y += moveY * player.speed;
+
+                    player.x = Math.max(20, Math.min(canvas.width - 20, player.x));
+                    player.y = Math.max(20, Math.min(canvas.height - 20, player.y));
+
+                    // Guardar historial de movimientos para la cola tipo Víborita
+                    history.unshift({ x: player.x, y: player.y });
+                    if (history.length > 300) history.pop();
+                }
+
+                // Dibujar Basura activa
+                if (activeTrash) {
+                    ctx.fillStyle = activeTrash.type.color; ctx.beginPath();
+                    ctx.arc(activeTrash.x, activeTrash.y, activeTrash.radius, 0, Math.PI * 2); ctx.fill();
+                    ctx.font = '16px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                    ctx.fillText(activeTrash.type.emoji, activeTrash.x, activeTrash.y);
+
+                    // Colisión
+                    const dist = Math.hypot(player.x - activeTrash.x, player.y - activeTrash.y);
+                    if (dist < player.radius + activeTrash.radius) {
+                        sounds.playPop();
+                        tail.push(activeTrash.type);
+                        trashCollected++;
+                        score += 100;
+                        document.getElementById('scoreText').textContent = `${score} Pts`;
+                        document.getElementById('chainText').textContent = `Largo: ${tail.length} elementos`;
+                        spawnNextTrash();
+                    }
+                }
+
+                // DIBUJAR COLA TIPO VÍBORITA (Snake Chain)
+                const spacing = 12; // Distancia entre elementos enganchados
+                tail.forEach((item, index) => {
+                    const historyIndex = (index + 1) * spacing;
+                    const pos = history[historyIndex] || { x: player.x, y: player.y };
+
+                    ctx.fillStyle = item.color; ctx.beginPath();
+                    ctx.arc(pos.x, pos.y, 14, 0, Math.PI * 2); ctx.fill();
+                    ctx.font = '14px sans-serif'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                    ctx.fillText(item.emoji, pos.x, pos.y);
+                });
+
+                // Dibujar Cabeza (Jugador)
+                if (selectedCharacter === 'turtle') drawTurtleSprite(ctx, player.x, player.y, player.angle);
+                else drawBeetleSprite(ctx, player.x, player.y, player.angle);
+            }
+
+            requestAnimationFrame(gameLoop);
+        }
+
+        window.addEventListener('load', () => {
+            canvas = document.getElementById('gameCanvas');
+            ctx = canvas.getContext('2d');
+
+            function resize() {
+                canvas.width = canvas.parentElement.clientWidth;
+                canvas.height = canvas.parentElement.clientHeight;
+            }
+            window.addEventListener('resize', resize);
+            resize();
+
+            const pTur = document.getElementById('previewTurtle').getContext('2d');
+            drawTurtleSprite(pTur, 30, 30, 0);
+
+            const pBee = document.getElementById('previewBeetle').getContext('2d');
+            drawBeetleSprite(pBee, 30, 30, 0);
+
+            selectCharacter('turtle');
+
+            window.addEventListener('keydown', (e) => { if (keys.hasOwnProperty(e.key)) keys[e.key] = true; });
+            window.addEventListener('keyup', (e) => { if (keys.hasOwnProperty(e.key)) keys[e.key] = false; });
+
+            const bindTouch = (id, keyName) => {
+                const btn = document.getElementById(id);
+                if (!btn) return;
+                btn.addEventListener('touchstart', (e) => { e.preventDefault(); keys[keyName] = true; });
+                btn.addEventListener('touchend', (e) => { e.preventDefault(); keys[keyName] = false; });
+            };
+            bindTouch('btnUp', 'ArrowUp'); bindTouch('btnDown', 'ArrowDown');
+            bindTouch('btnLeft', 'ArrowLeft'); bindTouch('btnRight', 'ArrowRight');
+
+            lucide.createIcons();
+            requestAnimationFrame(gameLoop);
+        });
+    </script>
+</body>
+
+</html>

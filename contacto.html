@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>M.A.R.E.A. - Sumate</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <link rel="stylesheet" href="style.css">
+
+    <style>
+        /* Estilos específicos para la página de Contacto / Sumate */
+        .sumate-card {
+            background-color: rgba(255, 255, 255, 0.92);
+            border-radius: 12px;
+            padding: 2.5rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+            border-top: 5px solid var(--forest-green, #f44a80);
+            margin-bottom: 2rem;
+        }
+
+        .sumate-card h2 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--primary-dark, #18bcd2);
+            font-size: 2.2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .sumate-texto {
+            font-size: 1.15rem;
+            line-height: 1.8;
+            color: #2b2b2b;
+            margin-bottom: 1.5rem;
+        }
+
+        .texto-destacado {
+            display: block;
+            font-weight: 700;
+            color: #056914;
+            font-size: 1.25rem;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        /* Botón Donar Principal */
+        .btn-donar-container {
+            text-align: center;
+            margin: 2rem 0 1rem;
+        }
+
+        .btn-donar {
+            background-color: #024411;
+            color: #f5f5dc;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 800;
+            padding: 1rem 2.5rem;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            letter-spacing: 2px;
+            box-shadow: 0 4px 15px rgba(2, 68, 17, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-donar:hover {
+            background-color: #04681c;
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(2, 68, 17, 0.6);
+        }
+
+        /* Formulario opcional para Voluntariado */
+        .formulario-voluntariado {
+            margin-top: 2.5rem;
+            padding-top: 2rem;
+            border-top: 2px dashed #e0e0e0;
+        }
+
+        .formulario-voluntariado h3 {
+            font-family: 'Montserrat', sans-serif;
+            color: var(--forest-green, #f44a80);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+
+        .form-group label {
+            display: block;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 0.4rem;
+            color: #333;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-family: inherit;
+            font-size: 1rem;
+        }
+
+        .btn-enviar {
+            background-color: var(--primary-dark, #18bcd2);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            padding: 0.8rem 1.8rem;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+
+        .btn-enviar:hover {
+            background-color: #139cb0;
+        }
+
+        @media (max-width: 768px) {
+            .sumate-card {
+                padding: 1.5rem;
+            }
+
+            .sumate-card h2 {
+                font-size: 1.7rem;
+            }
+
+            .btn-donar {
+                width: 100%;
+                padding: 0.9rem 1rem;
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- NAVEGACIÓN PRINCIPAL -->
+    <nav class="navbar">
+        <!-- Botón Hamburguesa Móvil -->
+        <button class="menu-toggle" id="menuToggle" aria-label="Abrir menú">
+            <span></span>
+            <span></span>
+            <span></span>
+        </button>
+
+        <!-- Enlaces de Navegación -->
+        <div class="nav-links" id="navLinks">
+            <a href="index.html">Inicio</a>
+            <a href="novedades.html">Novedades</a>
+            <a href="galeria.html">Galería</a>
+            <a href="acercaDe.html">Acerca de nosotrxs</a>
+            <a href="juego2.html">Mini-Juego</a>
+            <a href="juego.html">Escribí en la arena</a>
+            <a href="contacto.html">Sumate</a>
+        </div>
+    </nav>
+
+    <!-- HEADER PRINCIPAL -->
+    <header class="header-principal">
+        <h1><span>M.A.R.E.A</span></h1>
+        <p>Movimiento Argentino de Restauración Ecológica Acuática</p>
+    </header>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="container">
+        
+        <!-- SECCIÓN DONACIÓN -->
+        <section class="sumate-card">
+            <h2>Sumate a la iniciativa</h2>
+            
+            <p class="sumate-texto">
+                <strong>Sé parte del cambio que la naturaleza necesita.</strong><br>
+                Si llegaste hasta aquí, es porque te importa el planeta. Porque tenés alma de activista y creés, como nosotros, que un futuro más justo y verde es posible. 🌱
+            </p>
+
+            <p class="sumate-texto">
+                Trabajamos para defender el medio ambiente. Somos personas como vos: comprometidas, valientes y con la convicción de que cada acción cuenta.
+            </p>
+
+            <p class="sumate-texto">
+                <strong>Independencia ante todo:</strong> No recibimos dinero de empresas, partidos políticos ni gobiernos. Solo contamos con la fuerza de nuestra comunidad y tu ayuda.
+            </p>
+
+            <span class="texto-destacado">
+                💚 Sentí el orgullo de cuidar lo que amás. Haz tu donación hoy.
+            </span>
+
+            <div class="btn-donar-container">
+                <button class="btn-donar" onclick="alert('¡Gracias por tu deseo de colaborar! Es un tp y no es un link real.')">
+                    DONÁ AHORA
+                </button>
+            </div>
+
+            <!-- FORMULARIO DE VOLUNTARIADO / CONTACTO -->
+            <div class="formulario-voluntariado">
+                <h3>¿Querés participar como voluntario/a?</h3>
+                <p style="text-align: center; margin-bottom: 1.5rem; color: #555;">Dejanos tus datos para sumarte a nuestras próximas jornadas de limpieza de costas y talleres.</p>
+                
+                <form action="#" method="POST" onsubmit="event.preventDefault(); alert('¡Mensaje enviado con éxito! - es de prueba no se envió realmente- Nos pondremos en contacto pronto.');">
+                    <div class="form-group">
+                        <label for="nombre">Nombre Completo:</label>
+                        <input type="text" id="nombre" name="nombre" placeholder="Ej: María González" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico:</label>
+                        <input type="email" id="email" name="email" placeholder="tuemail@ejemplo.com" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="mensaje">¿Cómo te gustaría colaborar?</label>
+                        <textarea id="mensaje" name="mensaje" rows="4" placeholder="Contanos sobre vos o en qué área podés sumar..."></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-enviar">ENVIAR MENSAJE</button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <p>&copy; 2026 M.A.R.E.A. <br>Hecho con compromiso ambiental.</p>
+    </footer>
+
+    <!-- SCRIPT DE NAVEGACIÓN -->
+    <script>
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            menuToggle.classList.toggle('open');
+        });
+    </script>
+
+</body>
+
+</html>
